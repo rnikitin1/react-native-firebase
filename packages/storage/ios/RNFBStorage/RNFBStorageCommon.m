@@ -273,6 +273,7 @@
 
 + (NSDictionary *)metadataToDict:(FIRStorageMetadata *)metadata {
   NSMutableDictionary *storageMetadata = [[metadata dictionaryRepresentation] mutableCopy];
+  NSLog(@"STORAGE returned dictionary %@", storageMetadata);
   if (storageMetadata == nil) {
     return nil;
   }

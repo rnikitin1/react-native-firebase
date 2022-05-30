@@ -110,6 +110,7 @@ class ReactNativeFirebaseStorageCommon {
       }
 
       if (metadataMap.hasKey(KEY_CONTENT_ENCODING)) {
+        System.err.println("STORAGE KEY_CONTENT_ENCODING is " + metadataMap.getString(KEY_CONTENT_ENCODING));
         metadataBuilder.setContentEncoding(metadataMap.getString(KEY_CONTENT_ENCODING));
       }
 

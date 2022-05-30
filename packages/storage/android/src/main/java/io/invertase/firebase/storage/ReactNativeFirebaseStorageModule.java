@@ -175,18 +175,26 @@ public class ReactNativeFirebaseStorageModule extends ReactNativeFirebaseModule 
   @ReactMethod
   public void updateMetadata(
       String appName, String url, ReadableMap metadataMap, final Promise promise) {
+    System.err.println("STORAGE updateMetadata start");
     try {
       StorageReference reference = getReferenceFromUrl(url, appName);
+      System.err.println("STORAGE updateMetadata getReferenceFromUrl returned");
       StorageMetadata metadata = buildMetadataFromMap(metadataMap, null);
+      System.err.println("STORAGE updateMetadata buildMetadataFromMap done");
+      System.err.println("STORAGE content encoding: " + metadata.getContentEncoding());
 
       reference
           .updateMetadata(metadata)
           .addOnCompleteListener(
               getExecutor(),
               task -> {
+                System.err.println("STORAGE updateMetadata task complete");
                 if (task.isSuccessful()) {
+                  System.err.println("STORAGE updateMetadata successful, returning metadata map");
                   promise.resolve(getMetadataAsMap(task.getResult()));
                 } else {
+                  System.err.println("STORAGE EXCEPTION " + task.getException());
+                  task.getException().printStackTrace();
                   promiseRejectStorageException(promise, task.getException());
                 }
               });

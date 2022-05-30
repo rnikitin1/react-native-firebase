@@ -145,12 +145,15 @@ RCT_EXPORT_METHOD(updateMetadata
   FIRStorageReference *storageReference = [self getReferenceFromUrl:url app:firebaseApp];
   FIRStorageMetadata *storageMetadata = [RNFBStorageCommon buildMetadataFromMap:metadata];
 
+  NSLog(@"STORAGE pre-update metadata %@", metadata);
   [storageReference
       updateMetadata:storageMetadata
           completion:^(FIRStorageMetadata *_Nullable metadata, NSError *_Nullable error) {
             if (error != nil) {
+              NSLog(@"STORAGE there was an error %@", error);
               [self promiseRejectStorageException:reject error:error];
             } else {
+              NSLog(@"STORAGE post-update metadata %@", metadata);
               resolve([RNFBStorageCommon metadataToDict:metadata]);
             }
           }];
