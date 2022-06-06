@@ -421,7 +421,7 @@ describe('storage() -> StorageReference', function () {
         contentDisposition: null,
         contentEncoding: null,
         contentLanguage: null,
-        // customMetadata: null, // once set you may clear keys, but you are unable to remove custom metadata entirely
+        customMetadata: null, // once set you may clear keys, but you are unable to remove custom metadata entirely
       });
 
       // Things that are set automagically for us and are not updatable
@@ -436,17 +436,14 @@ describe('storage() -> StorageReference', function () {
       metadata.md5Hash.should.be.a.String();
       metadata.bucket.should.equal(`${firebase.app().options.projectId}.appspot.com`);
 
-      // custom metadata, once set, has to be manipulated by key
-      metadata.customMetadata.should.be.an.Object();
-      metadata.customMetadata.hello.should.equal('world');
-
       // Things that we may set (or remove)
       console.error('metadata: after 2nd update ' + JSON.stringify(metadata));
-      should.equal(metadata.contentType, ''); // fails on android against storage emulator
+      should.equal(metadata.contentType, undefined); // fails on android against storage emulator
       should.equal(metadata.cacheControl, undefined); // fails on android against storage emulator
-      should.equal(metadata.contentDisposition, ''); // fails on android against storage emulator
+      should.equal(metadata.contentDisposition, undefined); // fails on android against storage emulator
       should.equal(metadata.contentEncoding, 'identity'); // fails on android against storage emulator
       should.equal(metadata.contentLanguage, undefined); // fails on android against storage emulator
+      should.equal(metadata.customMetadata, undefined); // fails on android against storage emulator
     });
 
     // FIXME crashing on ios now with ios sdk v9

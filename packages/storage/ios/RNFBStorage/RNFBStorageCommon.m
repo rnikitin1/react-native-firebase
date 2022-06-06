@@ -395,7 +395,33 @@
 
 + (FIRStorageMetadata *)buildMetadataFromMap:(NSDictionary *)metadata {
   FIRStorageMetadata *storageMetadata = [[FIRStorageMetadata alloc] initWithDictionary:metadata];
-  storageMetadata.customMetadata = [metadata[@"customMetadata"] mutableCopy];
+  if (metadata[@"cacheControl"] == [NSNull null]) {
+    storageMetadata.cacheControl = nil;
+  }
+
+  if (metadata[@"contentLanguage"] == [NSNull null]) {
+    storageMetadata.contentLanguage = nil;
+  }
+
+  if (metadata[@"contentEncoding"] == [NSNull null]) {
+    storageMetadata.contentEncoding = nil;
+  }
+
+  if (metadata[@"contentDisposition"] == [NSNull null]) {
+    storageMetadata.contentDisposition = nil;
+  }
+
+  if (metadata[@"contentType"] == [NSNull null]) {
+    storageMetadata.contentType = nil;
+  }
+
+  if (metadata[@"customMetadata"] == [NSNull null]) {
+    NSLog(@"STORAGE customMetadata was null");
+    storageMetadata.customMetadata = [NSDictionary dictionary];
+  } else {
+    NSLog(@"STORAGE customMetadata was not null, it was %@", metadata[@"customMetadata"]);
+    storageMetadata.customMetadata = [metadata[@"customMetadata"] mutableCopy];
+  }
   return storageMetadata;
 }
 

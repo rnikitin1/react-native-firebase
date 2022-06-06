@@ -145,7 +145,8 @@ RCT_EXPORT_METHOD(updateMetadata
   FIRStorageReference *storageReference = [self getReferenceFromUrl:url app:firebaseApp];
   FIRStorageMetadata *storageMetadata = [RNFBStorageCommon buildMetadataFromMap:metadata];
 
-  NSLog(@"STORAGE pre-update metadata %@", metadata);
+  NSLog(@"STORAGE pre-update incoming metadata %@", metadata);
+  NSLog(@"STORAGE pre-update outgoing storageMetadata %@", storageMetadata);
   [storageReference
       updateMetadata:storageMetadata
           completion:^(FIRStorageMetadata *_Nullable metadata, NSError *_Nullable error) {
