@@ -843,48 +843,48 @@ class ReactNativeFirebaseAuthModule extends ReactNativeFirebaseModule {
           @Override
           public void onVerificationCompleted(final PhoneAuthCredential phoneAuthCredential) {
             // User has been automatically verified, log them in
-            firebaseAuth
-                .signInWithCredential(phoneAuthCredential)
-                .addOnCompleteListener(
-                    getExecutor(),
-                    task -> {
-                      if (task.isSuccessful()) {
-                        // onAuthStateChanged will pick up the user change
-                        Log.d(
-                            TAG,
-                            "signInWithPhoneNumber:autoVerified:signInWithCredential:onComplete:success");
-                        // To ensure that there is no hanging promise, we resolve it with a null
-                        // verificationId
-                        // as calling ConfirmationResult.confirm(code) is invalid in this case
-                        // anyway
-                        if (!promiseResolved) {
-                          WritableMap verificationMap = Arguments.createMap();
+//             firebaseAuth
+//                 .signInWithCredential(phoneAuthCredential)
+//                 .addOnCompleteListener(
+//                     getExecutor(),
+//                     task -> {
+//                       if (task.isSuccessful()) {
+//                         // onAuthStateChanged will pick up the user change
+//                         Log.d(
+//                             TAG,
+//                             "signInWithPhoneNumber:autoVerified:signInWithCredential:onComplete:success");
+//                         // To ensure that there is no hanging promise, we resolve it with a null
+//                         // verificationId
+//                         // as calling ConfirmationResult.confirm(code) is invalid in this case
+//                         // anyway
+//                         if (!promiseResolved) {
+//                           WritableMap verificationMap = Arguments.createMap();
 
-                          Parcel parcel = Parcel.obtain();
-                          phoneAuthCredential.writeToParcel(parcel, 0);
-                          parcel.setDataPosition(16); // verificationId
-                          String verificationId = parcel.readString();
-                          mVerificationId = verificationId;
-                          parcel.recycle();
+//                           Parcel parcel = Parcel.obtain();
+//                           phoneAuthCredential.writeToParcel(parcel, 0);
+//                           parcel.setDataPosition(16); // verificationId
+//                           String verificationId = parcel.readString();
+//                           mVerificationId = verificationId;
+//                           parcel.recycle();
 
-                          verificationMap.putString("verificationId", verificationId);
-                          promise.resolve(verificationMap);
-                        }
-                      } else {
-                        // With phone auth, the credential will only every be rejected if the user
-                        // account linked to the phone number has been disabled
-                        Exception exception = task.getException();
-                        Log.e(
-                            TAG,
-                            "signInWithPhoneNumber:autoVerified:signInWithCredential:onComplete:failure",
-                            exception);
-                        // In the scenario where an SMS code has been sent, we have no way to report
-                        // back to the front-end that as the promise has already been used
-                        if (!promiseResolved) {
-                          promiseRejectAuthException(promise, exception);
-                        }
-                      }
-                    });
+//                           verificationMap.putString("verificationId", verificationId);
+//                           promise.resolve(verificationMap);
+//                         }
+//                       } else {
+//                         // With phone auth, the credential will only every be rejected if the user
+//                         // account linked to the phone number has been disabled
+//                         Exception exception = task.getException();
+//                         Log.e(
+//                             TAG,
+//                             "signInWithPhoneNumber:autoVerified:signInWithCredential:onComplete:failure",
+//                             exception);
+//                         // In the scenario where an SMS code has been sent, we have no way to report
+//                         // back to the front-end that as the promise has already been used
+//                         if (!promiseResolved) {
+//                           promiseRejectAuthException(promise, exception);
+//                         }
+//                       }
+//                     });
           }
 
           @Override
